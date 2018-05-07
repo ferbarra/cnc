@@ -1,0 +1,14 @@
+
+{% extends 'reports/base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome to CNC Status Report</h1>
+        <p class="lead">A simple way to keep track of your CNC machinery.</p>
+        <hr class="my-4">
+        <p>Connect our device to your machine and see its status.</p>
+        <a href="{% url 'reports:report_log' %}" role="button" class="btn btn-primary btn-lg">Check Status</a>
+    </div>
+{% endblock content %}
