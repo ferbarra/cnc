@@ -20,7 +20,7 @@ def submit_status(request):
     if id == '' or status == '':
         print("Empty POST")
         return HttpResponse(status=103)
-    elif id == 0:
+    elif status == 0:
         return HttpResponse(status=204)
     else:
         print("ID: " + id)
