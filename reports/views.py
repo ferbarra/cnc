@@ -2,6 +2,10 @@ from django.shortcuts import render
 from django.views.decorators.http import require_POST, require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
+from django.utils import timezone
+
+from .models import StatusReport
+from datetime import datetime
 # Create your views here.
 
 def about(request):
@@ -17,12 +21,14 @@ def submit_status(request):
     id = request.POST.get("id", "")
     status = request.POST.get("status", "")
     time = request.POST.get("time", "")
-    if id == '' or status == '':
+    if id == '' or status == '' or time == '':
         print("Empty POST")
         return HttpResponse(status=103)
     elif status == 0:
         return HttpResponse(status=204)
     else:
+        # time = datetime.fromtimestamp(int(time))
+        # utc_time = timezone.make_aware(time, timezone.utc)
         print("ID: " + id)
         print("Status: " + status)
         print("Time: " + time)
