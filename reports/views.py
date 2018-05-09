@@ -27,9 +27,10 @@ def submit_status(request):
     elif status == 0:
         return HttpResponse(status=204)
     else:
-        # time = datetime.fromtimestamp(int(time))
-        # utc_time = timezone.make_aware(time, timezone.utc)
+        unix_time = datetime.fromtimestamp(int(time))
+        utc_time = timezone.make_aware(unix_time, timezone.utc)
         print("ID: " + id)
         print("Status: " + status)
         print("Time: " + time)
-        return HttpResponse(status=200)
+        response = id + '\n' + status + '\n' + time
+        return HttpResponse(response, status=200)
