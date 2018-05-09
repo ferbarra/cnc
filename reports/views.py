@@ -24,7 +24,7 @@ def submit_status(request):
     if id == '' or status == '' or time == '':
         print("Empty POST")
         return HttpResponse(status=103)
-    elif status == 0:
+    elif status == '0':
         return HttpResponse(status=204)
     else:
         unix_time = datetime.fromtimestamp(int(time))
