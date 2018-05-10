@@ -3,6 +3,7 @@ from django.views.decorators.http import require_POST, require_http_methods
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from django.utils import timezone
+from django.views.generic import ListView
 
 from .models import StatusReport
 from datetime import datetime
@@ -10,9 +11,6 @@ from datetime import datetime
 
 def about(request):
     return render(request, 'reports/about.html')
-
-def report_log(request):
-    return render(request, 'reports/report_log.html')
 
 
 @csrf_exempt
@@ -26,11 +24,33 @@ def submit_status(request):
         return HttpResponse(status=103)
     elif status == '0':
         return HttpResponse(status=204)
-    else:
-        unix_time = datetime.fromtimestamp(int(time))
-        utc_time = timezone.make_aware(unix_time, timezone.utc)
-        print("ID: " + id)
-        print("Status: " + status)
-        print("Time: " + time)
-        response = id + '\n' + status + '\n' + time
-        return HttpResponse(response, status=200)
+    unix_time = datetime.fromtimestamp(int(time))
+    mountain_time = timezone.make_aware(unix_time, timezone.utc)
+    machine_states = {
+        '1': "Malfunction detected",
+        '2': "Intervention required",
+        '3': "Operating correctly",
+        '4': "Requires action from operator",
+        '5': "Requires constant action from operator",
+    }
+    print("ID: " + id)
+    print("Status: " + status)
+    print("Time: " + time)
+    # Create new status report based on the Post Request.
+    StatusReport.objects.create(
+        machine_id=int(id),
+        status=machine_states[status],
+        timestamp=unix_time
+    )
+    response = id + '\n' + status + '\n' + str(unix_time)
+    print(response)
+    return HttpResponse(response, status=200)
+
+class AllReports(ListView):
+    model = StatusReport
+    context_object_name = "reports"
+    template_name = "reports/all_reports.html"
+    paginate_by = 10
+
+    def get_queryset(self):
+        return StatusReport.objects.all().order_by('-timestamp')
