@@ -17,6 +17,14 @@ tests/.coverage
 build/
 tests/report/
 
+# This only ignore the static directory at the top-most level.
+# This directory is used to serve the static files during production.
+# The command "python manage.py collectstatic" must be called when deploying.
+# This command is not necessary during development. This directory is ignored
+# because tracking this files is meaningless since they are in the static
+# directories inside each individual app.
+static/
+
 # For python decouple.
 .env
 media/
