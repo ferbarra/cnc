@@ -20,7 +20,7 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
               <a class="nav-item nav-link {% if request.resolver_match.url_name == "about" %}active{% endif %}" href="{% url 'reports:about' %}">About <span class="sr-only">(current)</span></a>
-              <a class="nav-item nav-link {% if request.resolver_match.url_name == "report_log" %}active{% endif %}" href="{% url 'reports:report_log' %}">Report Log</a>
+              <a class="nav-item nav-link {% if request.resolver_match.url_name == "report_log" %}active{% endif %}" href="{% url 'reports:report_log' %}">All Reports</a>
             </div>
         </div>
     </div>
