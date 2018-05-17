@@ -12,6 +12,16 @@ from datetime import datetime
 def about(request):
     return render(request, 'reports/about.html')
 
+def all_machines(request):
+    # For now there is no table for machines so all availble machines
+    # can be found in the status report table.
+    queryset = StatusReport.objects.values('machine_id').distinct()
+    machines = []
+    for x in queryset:
+        machines.append(x['machine_id'])
+    context = {'machines': machines}
+    return render(request, 'reports/machines.html', context)
+
 
 @csrf_exempt
 @require_http_methods(["POST"])
@@ -54,3 +64,14 @@ class AllReports(ListView):
 
     def get_queryset(self):
         return StatusReport.objects.all().order_by('-timestamp')
+
+class MachineReports(ListView):
+    model = StatusReport
+    context_object_name = 'reports'
+    template_name = 'reports/machine_report.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return StatusReport.objects.filter(
+            machine_id = self.kwargs['machine_id']
+        ).order_by('-timestamp')

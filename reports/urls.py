@@ -9,7 +9,9 @@ app_name = 'reports'
 urlpatterns = [
     path('', views.about, name='about'),
     path('report_log/', views.AllReports.as_view(), name='report_log'),
-    path('submit_status/', views.submit_status, name='submit_status')
+    path('submit_status/', views.submit_status, name='submit_status'),
+    path('machines/', views.all_machines, name='machines'),
+    path('machines/<int:machine_id>/', views.MachineReports.as_view(), name='machine_reports')
 ]
 
 if settings.DEBUG:

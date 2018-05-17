@@ -1,0 +1,14 @@
+{% extends 'reports/base.html' %}
+
+{% block content %}
+    <div class="container">
+        <h1>Machines</h1>
+        <hr>
+        <ul>
+            {% for machine in machines %}
+                <li><a href="{% url 'reports:machine_reports' machine_id=machine %}">{{machine}}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    
+{% endblock content %}
