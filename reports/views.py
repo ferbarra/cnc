@@ -75,3 +75,8 @@ class MachineReports(ListView):
         return StatusReport.objects.filter(
             machine_id = self.kwargs['machine_id']
         ).order_by('-timestamp')
+
+    def get_context_data(self, **kwargs):
+        context = super(self.__class__, self).get_context_data(**kwargs)
+        context['machine'] = self.kwargs['machine_id']
+        return context

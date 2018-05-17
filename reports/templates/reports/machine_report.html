@@ -1,6 +1,6 @@
 {% extends 'reports/base.html' %} {% load static %} {% block content %}
 <div class="container">
-    <h1>Machine Status</h1>
+    <h1>Machine {{ machine }} Status</h1>
     <hr>
     {% if reports %}
     <table class="table table-hover">
